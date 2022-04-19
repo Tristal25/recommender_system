@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<br>
+Input the movies and your ratings:
+<br>
+<form method="post">
+    Movie <input type="text" name="title" autocomplete="off" required>
+    Rating <input type="text" name="rating" autocomplete="off" required>
+    <input class="btn" type="submit" name="submit" value="Add">
+</form>
+<p>{{ ratings|length }} Rated movies</p>
+<ul class="movie-list">
+    {% for rating in ratings %}
+    <li>{{ rating.title }} - {{ rating.year }}, Rating: {{ rating.rating }}
+        <span class="float-right">
+            <a class="btn" href="{{ url_for('edit', rating_id=rating.ratingId) }}">Edit</a>
+            <a class="btn" href="{{ url_for('similar', rating_id=rating.ratingId) }}">Similar</a>
+            <form class = "inline-form" method = "post" action = "{{ url_for('delete', rating_id = rating.ratingId) }}">
+                <input class = "btn" type = "submit" name = "delete" value = "Delete" onclick = "return confirm('Are you sure?')">
+            </form>
+            <a class="imdb" href="https://www.imdb.com/find?q={{ rating.title }}" target="_blank" title="Find this movie on IMDb">IMDb</a>
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/totoro.jpg') }}" title="to~to~ro~">
+{% endblock %}

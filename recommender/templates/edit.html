@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Edit records:</h3>
+<form method="post">
+    Name <input type="text" name="title" autocomplete="off" required value="{{ rating.title }}">
+    Rating <input type="text" name="rating" autocomplete="off" required value="{{ rating.rating }}">
+    <input class="btn" type="submit" name="submit" value="Update">
+</form>
+
+{% endblock %}
